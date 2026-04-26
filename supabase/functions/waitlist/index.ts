@@ -36,29 +36,34 @@ Deno.serve(async (req) => {
       throw new Error(error.message ?? JSON.stringify(error));
     }
 
-    await fetch("https://api.resend.com/emails", {
+    const resendRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Study Buddy <onboarding@resend.dev>",
+        from: "GarlicMonkey <noreply@garlicmonkey.app>",
         to: email,
         subject: "You're on the waitlist, Founding Chef!",
         html: `
           <h2>You're in!</h2>
-          <p>Thanks for joining the Study Buddy waitlist.</p>
+          <p>Thanks for joining the GarlicMonkey waitlist.</p>
           <p>We will be in touch soon.</p>
         `,
       }),
     });
+    if (!resendRes.ok) {
+      const resendError = await resendRes.text();
+      throw new Error(`Resend error: ${resendError}`);
+    }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
+    console.error("Waitlist function error:", err);
     return new Response(JSON.stringify({ error: String(err) }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
