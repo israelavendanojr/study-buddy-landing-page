@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Be+Vietnam+Pro:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+@layer base {
+  :root {
+    /* Kitchen Notebook Palette - HSL */
+    --background: 45 50% 96%;          /* #F9F7F2 warm off-white */
+    --foreground: 0 0% 10%;            /* #1A1A1A ink black */
+
+    --paper: 45 50% 96%;
+    --paper-shadow: 48 27% 86%;        /* #E6E2D3 */
+    --paper-dim: 48 22% 83%;
+
+    --ink: 0 0% 10%;                   /* #1A1A1A */
+    --ink-soft: 0 0% 25%;
+
+    --amber: 24 71% 41%;               /* #B35C1E highlighter */
+    --amber-foreground: 45 50% 96%;
+    --amber-soft: 24 80% 92%;
+
+    --card: 45 40% 93%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 45 50% 96%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 24 71% 41%;
+    --primary-foreground: 45 50% 96%;
+
+    --secondary: 48 27% 86%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 48 27% 86%;
+    --muted-foreground: 0 0% 30%;
+
+    --accent: 24 71% 41%;
+    --accent-foreground: 45 50% 96%;
+
+    --destructive: 0 84% 45%;
+    --destructive-foreground: 45 50% 96%;
+
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 24 71% 41%;
+
+    --radius: 0.25rem;
+
+    --sidebar-background: 45 50% 96%;
+    --sidebar-foreground: 0 0% 10%;
+    --sidebar-primary: 24 71% 41%;
+    --sidebar-primary-foreground: 45 50% 96%;
+    --sidebar-accent: 48 27% 86%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 0 0% 10%;
+    --sidebar-ring: 24 71% 41%;
+  }
+
+  .dark {
+    --background: 45 50% 96%;
+    --foreground: 0 0% 10%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+    background-image:
+      linear-gradient(hsl(var(--paper-shadow) / 0.55) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--paper-shadow) / 0.55) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Newsreader', Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .font-serif-display {
+    font-family: 'Newsreader', Georgia, serif;
+  }
+  .font-handwritten {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+  }
+  .font-mono-label {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Notebook card with offset block shadow */
+  .notebook-card {
+    @apply bg-card border-2 border-foreground rounded-sm relative;
+    box-shadow: 6px 6px 0 0 hsl(var(--foreground));
+  }
+  .notebook-card-soft {
+    @apply bg-card border-2 border-foreground rounded-sm relative;
+    box-shadow: 5px 5px 0 0 hsl(var(--paper-shadow));
+  }
+  .notebook-card-dashed {
+    @apply bg-card border-2 border-dashed border-foreground rounded-sm;
+  }
+
+  /* Amber highlighter button */
+  .btn-amber {
+    @apply bg-primary text-primary-foreground border-2 border-foreground rounded-sm font-mono-label font-bold uppercase tracking-wider px-7 py-4 inline-flex items-center justify-center gap-2 transition-all duration-100;
+    box-shadow: 5px 5px 0 0 hsl(var(--foreground));
+  }
+  .btn-amber:hover { transform: translate(1px, 1px); box-shadow: 4px 4px 0 0 hsl(var(--foreground)); }
+  .btn-amber:active { transform: translate(5px, 5px); box-shadow: 0 0 0 0 hsl(var(--foreground)); }
+
+  .btn-ghost-ink {
+    @apply bg-transparent text-foreground border-2 border-dashed border-foreground rounded-sm font-mono-label font-bold uppercase px-6 py-3 inline-flex items-center gap-2 transition-all hover:bg-foreground hover:text-background;
+  }
+
+  /* Speech bubble */
+  .speech-bubble {
+    @apply relative bg-card border-2 border-foreground rounded-md px-5 py-4 font-handwritten text-foreground;
+    box-shadow: 4px 4px 0 0 hsl(var(--paper-shadow));
+  }
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 28px;
+    width: 0; height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 14px solid hsl(var(--foreground));
+  }
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 30px;
+    width: 0; height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 12px solid hsl(var(--card));
+  }
+
+  .ink-divider {
+    height: 2px;
+    background: repeating-linear-gradient(90deg, hsl(var(--foreground)) 0 8px, transparent 8px 14px);
+  }
+
+  .highlighter-mark {
+    background: linear-gradient(180deg, transparent 55%, hsl(var(--amber) / 0.35) 55% 92%, transparent 92%);
+    padding: 0 2px;
+  }
+
+  .fill-blank {
+    @apply inline-block min-w-[120px] text-center font-bold text-primary border-b-2 border-primary px-2;
+  }
+}
