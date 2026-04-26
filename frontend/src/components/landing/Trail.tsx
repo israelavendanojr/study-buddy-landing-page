@@ -1,4 +1,4 @@
-import { Check, Lock, ChevronRight, Hand, ChefHat, Utensils } from "lucide-react";
+import { Check, Lock, ChevronRight, Hand, ChefHat, Utensils, Flame, Zap } from "lucide-react";
 import { Mascot } from "./Mascot";
 
 const nodes = [
@@ -36,10 +36,10 @@ export const Trail = () => (
             <div className="font-serif-display italic text-xl font-bold">GarlicMonkey</div>
             <div className="flex items-center gap-2">
               <div className="border-2 border-foreground rounded-sm px-2.5 py-1 font-mono-label text-xs font-bold flex items-center gap-1.5">
-                🔥 7
+                <Flame className="w-3.5 h-3.5" strokeWidth={2.25} /> 7
               </div>
               <div className="border-2 border-foreground rounded-sm px-2.5 py-1 font-mono-label text-xs font-bold flex items-center gap-1.5">
-                ⚡ 1200 XP
+                <Zap className="w-3.5 h-3.5" strokeWidth={2.25} /> 1200 XP
               </div>
             </div>
           </div>

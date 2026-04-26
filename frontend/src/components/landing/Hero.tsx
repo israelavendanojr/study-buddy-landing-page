@@ -35,7 +35,7 @@ export const Hero = () => {
             </div>
             <div className="w-px h-8 bg-foreground/30" />
             <div>
-              <div className="text-foreground font-bold text-base">120 XP</div>
+              <div className="text-foreground font-bold text-base">Gain XP</div>
               per chapter
             </div>
             <div className="w-px h-8 bg-foreground/30" />
