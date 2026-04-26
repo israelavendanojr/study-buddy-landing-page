@@ -6,12 +6,33 @@ export const Waitlist = () => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    setSubmitted(true);
-    toast.success("You're on the list. Welcome, Founding Chef.");
-    setEmail("");
+    setLoading(true);
+    
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/waitlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      const data = await res.json();
+      if (data.already_joined) {
+        toast.info("You're already on the list!");
+      } else {
+        setSubmitted(true);
+        toast.success("You're on the list. Welcome, Founding Chef.");
+        setEmail("");
+      }
+    } catch {
+      toast.error("Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,14 +63,14 @@ export const Waitlist = () => {
                 className="flex-1 bg-transparent outline-none placeholder:text-foreground/40 font-sans text-base"
               />
             </div>
-            <button type="submit" className="btn-amber !py-3 whitespace-nowrap">
-              Get Notified
+            <button type="submit" className="btn-amber !py-3 whitespace-nowrap" disabled={loading}>
+                {loading ? "Saving..." : "Get Notified"}
             </button>
           </form>
 
           {submitted && (
             <p className="mt-4 font-handwritten text-primary">
-              Saved you a spot at the pass. Bobo will be in touch.
+              Saved you a spot at the pass. We will be in touch.
             </p>
           )}
 
